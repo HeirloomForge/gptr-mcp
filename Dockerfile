@@ -53,7 +53,4 @@ ENV MCP_TRANSPORT=sse \
 
 EXPOSE 8000
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD curl -fsS http://localhost:8000/health || exit 1
-
 CMD ["python", "server.py"]
