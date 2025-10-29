@@ -138,3 +138,7 @@ zipp>=3.21.0
 zopfli>=0.2.3.post1
 zstandard>=0.23.0
 tavily-python>=0.7.12
+
+# MCP dependencies
+fastmcp>=2.8.0
+sseclient-py>=1.7.0
