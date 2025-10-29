@@ -44,3 +44,4 @@ tiktoken>=0.9
 faiss-cpu==1.8.0.post1
 tavily-python>=0.3.5
 
+numpy>=1.0,<2.0
