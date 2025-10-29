@@ -1,5 +1,7 @@
 # GPT Researcher dependencies
 gpt-researcher==0.14.3
+langchain
+
 # LangChain model integrations
 langchain-openai>=0.3.6          # OpenAI (GPT-4, etc)
 langchain-anthropic>=0.3.12      # Anthropic (Claude)
