@@ -1,8 +1,28 @@
 # GPT Researcher dependencies
 gpt-researcher==0.14.3
-langchain>=0.2.11,<0.3
+# LangChain model integrations
+langchain-openai>=0.3.6          # OpenAI (GPT-4, etc)
+langchain-anthropic>=0.3.12      # Anthropic (Claude)
+langchain-google-genai>=0.0.14   # Google Gemini
+langchain-community>=0.3.17      # Community integrations (Qwen via Ollama)
+
+# For local Qwen models
+langchain-ollama>=0.3.3
+ollama>=0.4.8
+
 langchain-community>=0.3.17
-langchain-text-splitters>=0.2.2,<0.3
+langchain-core>=0.3.61
+langchain-ollama>=0.3.3
+langchain-openai>=0.3.6
+langchain-text-splitters>=0.3.8
+langgraph>=0.2.76
+langgraph-checkpoint>=2.0.26
+langgraph-cli>=0.2.10
+langgraph-sdk>=0.1.70
+langsmith>=0.3.42
+litellm>=1.71.0
+
+
 fastapi>=0.115,<1
 starlette>=0.37,<0.38
 uvicorn[standard]>=0.30,<0.31
