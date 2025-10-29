@@ -23,13 +23,24 @@ langsmith>=0.3.42
 litellm>=1.71.0
 
 
-fastapi>=0.115,<1
-starlette>=0.37,<0.38
-uvicorn[standard]>=0.30,<0.31
-pydantic>=2.7,<3
+# MCP dependencies
+fastmcp>=2.8.0
+fastapi>=0.103.1
+uvicorn>=0.23.2
+pydantic>=2.3.0
+
+# Utility dependencies
+loguru>=0.7.0
+
+# Testing dependencies
+httpx>=0.24.0
+sseclient-py>=1.7.0
+
+
+starlette>=0.46.2
 python-dotenv>=1.0
 httpx>=0.28
 tiktoken>=0.7,<0.8
 faiss-cpu==1.8.0.post1
 tavily-python>=0.3.5
-fastmcp>=2.8.0
+
