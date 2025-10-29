@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install Python deps
 COPY requirements.txt .
-# Preinstall numpy first so faiss picks correct wheel
+# Preinstall numpy so faiss picks the right wheel
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir numpy==2.3.1 && \
     pip install --no-cache-dir faiss-cpu==1.9.0 && \
@@ -22,15 +22,31 @@ RUN pip install --upgrade pip && \
 # Patch legacy import in gpt_researcher 0.14.3
 # Replace: from langchain.docstore.document import Document
 # With:    from langchain_core.documents import Document
-RUN python - <<'PY'\nimport inspect, pathlib, gpt_researcher\np = pathlib.Path(inspect.getfile(gpt_researcher)).parent / 'prompts.py'\ns = p.read_text()\nold = 'from langchain.docstore.document import Document'\nnew = 'from langchain_core.documents import Document'\nif old in s:\n    s = s.replace(old, new)\n    p.write_text(s)\n    print('Patched', p)\nelse:\n    print('No legacy import found in', p)\nPY
+RUN python - <<'PY'
+import inspect, pathlib, gpt_researcher
+p = pathlib.Path(inspect.getfile(gpt_researcher)).parent / 'prompts.py'
+s = p.read_text()
+old = 'from langchain.docstore.document import Document'
+new = 'from langchain_core.documents import Document'
+if old in s:
+    s = s.replace(old, new)
+    p.write_text(s)
+    print('Patched', p)
+else:
+    print('No legacy import found in', p)
+PY
 
 # Fail fast: verify modern import works
-RUN python - <<'PY'\nimport gpt_researcher, langchain\nprint('gptr', getattr(gpt_researcher,'__version__',None), 'lc', langchain.__version__)\nfrom langchain_core.documents import Document\nprint('deps ok')\nPY
+RUN python - <<'PY'
+import gpt_researcher, langchain
+print('gptr', getattr(gpt_researcher,'__version__',None), 'lc', langchain.__version__)
+from langchain_core.documents import Document
+print('deps ok')
+PY
 
 # App code
 COPY . .
 
-# Environment
 ENV MCP_TRANSPORT=sse \
     DOCKER_CONTAINER=true \
     PYTHONUNBUFFERED=1
