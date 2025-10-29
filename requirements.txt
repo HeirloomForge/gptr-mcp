@@ -1,50 +1,24 @@
-# GPT Researcher dependencies
-gpt-researcher==0.14.3
-langchain
-langchain.docstore
+gpt-researcher==0.14.3 
+numpy==2.3.1 
+faiss-cpu==1.9.0
 
-# LangChain model integrations
-langchain-openai>=0.3.6          # OpenAI (GPT-4, etc)
-langchain-anthropic>=0.3.12      # Anthropic (Claude)
-langchain-google-genai>=0.0.14   # Google Gemini
-langchain-community>=0.3.17      # Community integrations (Qwen via Ollama)
+# LangChain (modern)
+langchain>=0.2.12,<0.3 
+langchain-community>=0.2.12,<0.3 
+langchain-text-splitters>=0.2.2,<0.3 
+langgraph>=0.2.70,<0.3
 
-# For local Qwen models
-langchain-ollama>=0.3.3
-ollama>=0.4.8
+# MCP + server
+fastmcp==2.8.0 
+fastapi==0.115.4 
+starlette==0.37.2 
+uvicorn[standard]==0.30.6 
+pydantic==2.9.2
 
-langchain-community>=0.3.17
-langchain-core>=0.3.61
-langchain-ollama>=0.3.3
-langchain-openai>=0.3.6
-langchain-text-splitters>=0.3.8
-langgraph>=0.2.76
-langgraph-checkpoint>=2.0.26
-langgraph-cli>=0.2.10
-langgraph-sdk>=0.1.70
-langsmith>=0.3.42
-litellm>=1.71.0
-
-
-# MCP dependencies
-fastmcp>=2.8.0
-fastapi>=0.103.1
-uvicorn>=0.23.2
-pydantic>=2.3.0
-
-# Utility dependencies
-loguru>=0.7.0
-
-# Testing dependencies
-httpx>=0.24.0
-sseclient-py>=1.7.0
-
-
-starlette>=0.46.2
-python-dotenv>=1.0
-httpx>=0.28
-tiktoken>=0.9
-faiss-cpu>=1.8.0.post1
-tavily-python>=0.3.5
-
-numpy>=2.0
+# Utilities
+httpx==0.27.2 
+python-dotenv==1.0.1 
+tiktoken==0.7.0 
+tavily-python==0.7.12 
+openai>=1.40.0 
+loguru==0.7.2
