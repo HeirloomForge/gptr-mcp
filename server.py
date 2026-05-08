@@ -277,13 +277,20 @@ def run_server():
         logger.error("OPENAI_API_KEY not found. Please set it in your .env file.")
         return
 
-    # Determine transport based on environment
-    transport = os.getenv("MCP_TRANSPORT", "stdio").lower()
-    
-    # Auto-detect Docker environment
-    if os.path.exists("/.dockerenv") or os.getenv("DOCKER_CONTAINER"):
-        transport = "sse"
-        logger.info("Docker environment detected, using SSE transport")
+    # Determine transport based on environment.
+    # Operator-set MCP_TRANSPORT always wins. If unset, fall back to
+    # Streamable HTTP in Docker (the modern transport that Claude Desktop,
+    # Claude Code, and Hermes default to; classic SSE has been superseded
+    # in the MCP spec). Outside Docker default to stdio for Claude Desktop
+    # direct-launch compatibility.
+    explicit = os.getenv("MCP_TRANSPORT")
+    if explicit:
+        transport = explicit.lower()
+    elif os.path.exists("/.dockerenv") or os.getenv("DOCKER_CONTAINER"):
+        transport = "streamable-http"
+        logger.info("Docker environment detected, using Streamable HTTP transport")
+    else:
+        transport = "stdio"
     
     # Add startup message
     logger.info(f"Starting GPT Researcher MCP Server with {transport} transport...")

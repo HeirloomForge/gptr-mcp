@@ -6,7 +6,7 @@ services:
     ports:
       - "8502:8000"
     environment:
-      MCP_TRANSPORT: sse
+      MCP_TRANSPORT: streamable-http
       DOCKER_CONTAINER: "true"
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       OPENAI_BASE_URL: ${OPENAI_BASE_URL}   # e.g., https://your-litellm.domain/v1
