@@ -19,24 +19,11 @@ RUN pip install --upgrade pip && \
     pip install --no-cache-dir faiss-cpu==1.9.0 && \
     pip install --no-cache-dir -r requirements.txt
 
-# Patch legacy import in gpt_researcher 0.14.3
-# Replace: from langchain.docstore.document import Document
-# With:    from langchain_core.documents import Document
-RUN python - <<'PY'
-import inspect, pathlib, gpt_researcher
-p = pathlib.Path(inspect.getfile(gpt_researcher)).parent / 'prompts.py'
-s = p.read_text()
-old = 'from langchain.docstore.document import Document'
-new = 'from langchain_core.documents import Document'
-if old in s:
-    s = s.replace(old, new)
-    p.write_text(s)
-    print('Patched', p)
-else:
-    print('No legacy import found in', p)
-PY
+# (the 0.14.3-era legacy-import patch is gone: verified absent from
+# gpt_researcher >= 0.14.7 prompts.py)
 
-# Fail fast: verify modern import works
+# Fail fast: print the resolved gpt-researcher version and verify the
+# modern import works
 RUN python - <<'PY'
 import gpt_researcher, langchain
 print('gptr', getattr(gpt_researcher,'__version__',None), 'lc', langchain.__version__)
