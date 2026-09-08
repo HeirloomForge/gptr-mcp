@@ -18,7 +18,13 @@ services:
       - /srv/gpt-mcp/logs:/app/logs
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:8502/health"]
+      # The MCP server listens on 8000 (uvicorn in server.py); 8502 never
+      # existed, so the container read "unhealthy" forever. `localhost`
+      # also does not resolve inside the slim image, so probe 127.0.0.1.
+      # No -f: any HTTP response (404 from FastMCP's unknown path included)
+      # proves the HTTP server is up; connection failure is the real
+      # failure.
+      test: ["CMD", "curl", "-s", "-m", "5", "-o", "/dev/null", "http://127.0.0.1:8000/health"]
       interval: 30s
       timeout: 10s
       retries: 3
